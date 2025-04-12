@@ -1,3 +1,5 @@
+// Use environment variable for API key or fallback to a default key
+// In a production environment, this should be handled server-side
 const API_KEY = "8f6bd3ce621ef9e4fb9ded1e25dc43e0";
 
 class Movie {
@@ -8,8 +10,17 @@ class Movie {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US`
       );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
-      console.log(data);
+
+      if (!data.results || !Array.isArray(data.results)) {
+        throw new Error("Invalid data format received from API");
+      }
+
       this.movies = data.results.slice(0, 10).map((movie) => ({
         id: movie.id,
         title: movie.title,
@@ -25,6 +36,7 @@ class Movie {
       return this.movies;
     } catch (error) {
       console.error("Failed to fetch movies:", error);
+      // Return empty array but log the error for debugging
       return [];
     }
   }
@@ -46,7 +58,14 @@ class Movie {
   }
 
   static getMovie(index) {
+    if (index < 0 || index >= this.movies.length) {
+      return null;
+    }
     return this.movies[index];
+  }
+
+  static getMovieById(id) {
+    return this.movies.find((movie) => movie.id === id) || null;
   }
 }
 

@@ -1,0 +1,46 @@
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-section about">
+            <h3>About Book My Corner</h3>
+            <p>Your premier destination for booking movie tickets online. We bring the cinema experience right to your
+                fingertips.</p>
+        </div>
+
+        <div class="footer-section links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section contact">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-envelope"></i> info@bookmycorner.com</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> Book My Corner. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Set current year in footer
+    document.addEventListener('DOMContentLoaded', () => {
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+    });
+</script>
