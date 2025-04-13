@@ -13,8 +13,19 @@
   <header id="main-header"></header>
   <main>
     <div class="main-container">
+      <!-- Filter Toggle Button -->
+      <button id="filter-toggle" class="filter-toggle">
+        <i class="fas fa-filter"></i> Filters
+      </button>
+
       <!-- Filters -->
       <div id="movie-filters" class="filter-container">
+        <div class="filter-header">
+          <h3>Movie Filters</h3>
+          <button id="close-filters" class="close-filters" title="Close filters">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
         <div class="filter-group">
           <label for="title">Movie Title:</label>
           <input type="text" id="title" placeholder="Search by title">
@@ -31,8 +42,6 @@
         </div>
         <div class="filter-group">
           <button id="applyFilters">Apply Filters</button>
-        </div>
-        <div class="filter-group">
           <button id="clearFilters">Clear Filters</button>
         </div>
       </div>
@@ -43,7 +52,6 @@
       <!-- Movies container -->
       <div class="movies-container"></div>
     </div>
-
   </main>
   <!-- Pagination -->
   <div id="pagination" class="pagination"></div>

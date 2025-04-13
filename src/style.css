@@ -29,28 +29,97 @@ main {
   padding: 20px 0;
 }
 
+/* Main Container */
+.main-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Filter Toggle Button */
+.filter-toggle {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background-color: #191919;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.filter-toggle:hover {
+  background-color: #0056b3;
+}
+
 /* Filter Container */
 .filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  position: fixed;
+  top: 4rem;
+  left: -300px;
+  width: 300px;
+  height: 45vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 0 auto 20px;
-  max-width: 1200px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.filter-container.active {
+  left: 0;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-header h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.close-filters {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.close-filters:hover {
+  color: #333;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-bottom: 15px;
 }
 
 .filter-group label {
   font-weight: 600;
   font-size: 0.9rem;
+  color: #fff;
 }
 
 .filter-group input,
@@ -138,6 +207,7 @@ main {
   background: var(--background);
   height: 4rem;
   opacity: 0.9;
+  z-index: 1000;
 }
 
 .menu-icon {
