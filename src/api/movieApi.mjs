@@ -5,26 +5,33 @@ const API_KEY = "8f6bd3ce621ef9e4fb9ded1e25dc43e0";
 class Movie {
   static movies = [];
 
-  static async fetchMovies() {
+  static async fetchMovies(filters = {}) {
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US`
-      );
+      const { query, genre, year, page = 1 } = filters;
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      let url;
+      if (query) {
+        url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(
+          query
+        )}&page=${page}`;
+      } else {
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}`;
+        if (genre) url += `&with_genres=${genre}`;
+        if (year) url += `&primary_release_year=${year}`;
       }
+
+      const response = await fetch(url);
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
+      if (!data.results || !Array.isArray(data.results))
+        throw new Error("Invalid data format from API");
 
-      if (!data.results || !Array.isArray(data.results)) {
-        throw new Error("Invalid data format received from API");
-      }
-
-      this.movies = data.results.slice(0, 10).map((movie) => ({
+      const movies = data.results.map((movie) => ({
         id: movie.id,
         title: movie.title,
-        price: Math.floor(Math.random() * 5) + 8, // $8-$12
+        price: Math.floor(Math.random() * 5) + 8,
         poster: movie.poster_path
           ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
           : null,
@@ -32,12 +39,17 @@ class Movie {
         rating: movie.vote_average,
         releaseDate: movie.release_date,
         seats: this.generateSeats(6, 8),
+        genre: movie.genre_ids.join(", "),
+        duration: movie.runtime || 120,
       }));
-      return this.movies;
+
+      return {
+        movies,
+        totalPages: data.total_pages,
+      };
     } catch (error) {
       console.error("Failed to fetch movies:", error);
-      // Return empty array but log the error for debugging
-      return [];
+      return { movies: [], totalPages: 1 };
     }
   }
 

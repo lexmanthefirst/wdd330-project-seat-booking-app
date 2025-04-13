@@ -5,9 +5,16 @@ const container = document.querySelector(".movies-container");
 const DEFAULT_POSTER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='%23ddd'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='16' fill='%23666'%3ENo Poster Available%3C/text%3E%3C/svg%3E";
 
-export async function renderMovies() {
+export async function renderMovies(movies = null) {
   try {
-    const movies = await Movie.fetchMovies();
+    // If movies are provided, use them; otherwise fetch from API
+    let movieData;
+    if (movies) {
+      movieData = { movies, totalPages: 1 };
+    } else {
+      movieData = await Movie.fetchMovies();
+      movies = movieData.movies;
+    }
 
     if (movies.length === 0) {
       container.innerHTML =
@@ -23,14 +30,14 @@ export async function renderMovies() {
       card.innerHTML = `
         <img src="${
           movie.poster || DEFAULT_POSTER
-        }" class="movie-poster" alt="${movie.title}">
+        }" class="movie-poster" alt="${movie.title}" loading="lazy">
         <div class="movie-content">
           <h3 class="movie-title">${movie.title}</h3>
           <div class="movie-details">
             <div class="rating">★ ${movie.rating.toFixed(1)}/10</div>
             <div class="price">$${movie.price}</div>
           </div>
-          <p class="movie-overview">${movie.overview.substring(0, 100)}...</p>
+          <p class="movie-overview">${movie.overview.substring(0, 100)}...</p> 
           <button class="book-button" data-movie-id="${
             movie.id
           }">Book Now</button>
@@ -44,7 +51,7 @@ export async function renderMovies() {
     document.querySelectorAll(".book-button").forEach((button) => {
       button.addEventListener("click", (e) => {
         const movieId = parseInt(e.target.getAttribute("data-movie-id"));
-        const movie = Movie.getMovieById(movieId);
+        const movie = movies.find((m) => m.id === movieId);
         if (movie) {
           renderSeatMap(movie);
         }

@@ -4,21 +4,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="src/style.css">
+  <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="src/main.js" type="module"></script>
   <title>Book My Corner - Movie Tickets</title>
 </head>
 
 <body>
   <header id="main-header"></header>
   <main>
-    <div class="movies-container"></div>
+    <div class="main-container">
+      <!-- Filters -->
+      <div id="movie-filters" class="filter-container">
+        <div class="filter-group">
+          <label for="title">Movie Title:</label>
+          <input type="text" id="title" placeholder="Search by title">
+        </div>
+        <div class="filter-group">
+          <label for="genre">Genre:</label>
+          <select id="genre">
+            <option value="">All Genres</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="year">Year:</label>
+          <input type="number" id="year" placeholder="Release year" min="1900" max="2023">
+        </div>
+        <div class="filter-group">
+          <button id="applyFilters">Apply Filters</button>
+        </div>
+        <div class="filter-group">
+          <button id="clearFilters">Clear Filters</button>
+        </div>
+      </div>
+
+      <!-- Loading spinner -->
+      <div id="loading" class="loading">Loading...</div>
+
+      <!-- Movies container -->
+      <div class="movies-container"></div>
+    </div>
+
   </main>
+  <!-- Pagination -->
+  <div id="pagination" class="pagination"></div>
   <footer id="main-footer"></footer>
 
   <!-- Container for seat map modal -->
   <div id="seat-map-container"></div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>
