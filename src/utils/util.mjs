@@ -1,8 +1,4 @@
 /**
- * Utility functions for the Book My Corner application
- */
-
-/**
  * Toggles the mobile navigation menu
  */
 export const toggleMenu = () => {
