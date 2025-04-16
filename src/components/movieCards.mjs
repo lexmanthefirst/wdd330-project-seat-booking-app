@@ -1,5 +1,6 @@
 import { Movie } from "../api/movieApi.mjs";
 import { renderSeatMap } from "./seatMap.mjs";
+import { openModal } from "./movieOverviewModal.mjs";
 
 const container = document.querySelector(".movies-container");
 const DEFAULT_POSTER =
@@ -30,21 +31,36 @@ export async function renderMovies(movies = null) {
       card.innerHTML = `
         <img src="${
           movie.poster || DEFAULT_POSTER
-        }" class="movie-poster" alt="${movie.title}" loading="lazy">
+        }" class="movie-poster" alt="${movie.title}">
         <div class="movie-content">
           <h3 class="movie-title">${movie.title}</h3>
           <div class="movie-details">
             <div class="rating">★ ${movie.rating.toFixed(1)}/10</div>
             <div class="price">$${movie.price}</div>
           </div>
-          <p class="movie-overview">${movie.overview.substring(0, 100)}...</p> 
-          <button class="book-button" data-movie-id="${
-            movie.id
-          }">Book Now</button>
+          <div class="movie-buttons">
+            <button class="view-details-button" data-movie-id="${
+              movie.id
+            }">View Details</button>
+            <button class="book-button" data-movie-id="${
+              movie.id
+            }">Book Now</button>
+          </div>
         </div>
       `;
 
       container.appendChild(card);
+    });
+
+    // Add event listeners to view details buttons
+    document.querySelectorAll(".view-details-button").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const movieId = parseInt(e.target.getAttribute("data-movie-id"));
+        const movie = movies.find((m) => m.id === movieId);
+        if (movie) {
+          openModal(movie);
+        }
+      });
     });
 
     // Add event listeners to book buttons
