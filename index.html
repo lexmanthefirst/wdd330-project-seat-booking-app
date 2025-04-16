@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Book My Corner - Movie Tickets</title>
+  <script>
+    // Apply theme immediately to prevent flash of unstyled content
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.dataset.theme = savedTheme;
+    })();
+  </script>
 </head>
 
 <body>
@@ -53,9 +60,18 @@
       <!-- Movies container -->
       <div class="movies-container"></div>
     </div>
+    <!-- theme-toggle -->
+    <div class="theme-toggle">
+      <button id="theme-btn" aria-label="Toggle theme">
+        <!-- Initial icon will be set by JavaScript -->
+      </button>
+    </div>
   </main>
-  <!-- Pagination -->
-  <div id="pagination" class="pagination"></div>
+  <section class="pagination-wrapper">
+    <!-- Pagination -->
+    <div id="pagination" class="pagination"></div>
+  </section>
+
   <footer id="main-footer"></footer>
 
   <!-- Container for seat map modal -->

@@ -72,18 +72,18 @@ export function openModal(movie) {
   modalTitle.textContent = movie.title;
   modalPoster.src = movie.poster || "src/public/assets/no-poster.svg";
   modalPoster.alt = movie.title;
-  modalRating.innerHTML = `<span class="rating-label">Rating:</span> <span class="rating-value">★ ${movie.rating.toFixed(
+  modalRating.innerHTML = `<span class="rating-label"><strong>Rating</strong></span> <span class="rating-value">⭐ ${movie.rating.toFixed(
     1
   )}/10</span>`;
-  modalPrice.innerHTML = `<span class="price-label">Price:</span> <span class="price-value">$${movie.price}</span>`;
-  modalReleaseDate.innerHTML = `<span class="release-label">Release Date:</span> <span class="release-value">${formatDate(
+  modalPrice.innerHTML = `<span class="price-label"><strong>Price</strong></span> <span class="price-value">$${movie.price}</span>`;
+  modalReleaseDate.innerHTML = `<span class="release-label"><strong>Release Date</strong></span> <span class="release-value">${formatDate(
     movie.releaseDate
   )}</span>`;
-  modalGenre.innerHTML = `<span class="genre-label">Genre:</span> <span class="genre-value">${getGenreNames(
+  modalGenre.innerHTML = `<span class="genre-label"><strong>Genre</strong></span> <span class="genre-value">${getGenreNames(
     movie.genre
   )}</span>`;
-  modalDuration.innerHTML = `<span class="duration-label">Duration:</span> <span class="duration-value">${movie.duration} minutes</span>`;
-  modalOverview.innerHTML = `<span class="overview-label">Overview:</span><p class="overview-text">${movie.overview}</p>`;
+  modalDuration.innerHTML = `<span class="duration-label"><strong>Duration</strong></span> <span class="duration-value">${movie.duration} minutes</span>`;
+  modalOverview.innerHTML = `<span class="overview-label"><strong>Overview</strong></span><p class="overview-text">${movie.overview}</p>`;
 
   // Set up book button
   modalBookButton.onclick = () => {

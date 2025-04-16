@@ -1,6 +1,6 @@
 import { renderMovies } from "./components/movieCards.mjs";
 import { Movie } from "./api/movieApi.mjs";
-import { toggleMenu, loadAllTemplates } from "./utils/util.mjs";
+import { toggleMenu, loadAllTemplates, darkMode } from "./utils/util.mjs";
 import "./components/filterMovies.js";
 import "./components/filterToggle.js";
 import "./components/movieOverviewModal.mjs";
@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (burgerMenu) {
       burgerMenu.addEventListener("click", toggleMenu);
     }
+
+    // Initialize dark mode
+    darkMode();
 
     // Render movies
     await renderMovies();
