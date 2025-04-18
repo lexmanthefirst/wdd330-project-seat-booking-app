@@ -24,49 +24,58 @@ export const toggleMenu = () => {
   }
 };
 
-export async function loadTemplate(templateName) {
+export function renderWithTemplate(
+  template,
+  parentElement,
+  data = null,
+  callback = null
+) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  return res.text();
+}
+
+export async function loadHeaderFooter() {
   try {
-    const response = await fetch(`/src/public/partials/${templateName}.html`);
-    if (!response.ok) {
-      throw new Error(`Failed to load template: ${templateName}`);
+    // Determine the correct path based on the current page
+    const isMoviePage = window.location.pathname.includes("moviePage");
+    const basePath = isMoviePage ? "../partials/" : "/src/partials/";
+
+    // Load templates - use different header for movie page
+    const headerTemplate = await loadTemplate(
+      isMoviePage ? `${basePath}moviePageHeader.html` : `${basePath}header.html`
+    );
+    const footerTemplate = await loadTemplate(`${basePath}footer.html`);
+
+    // Try both ID and class selectors for header
+    const headerElement =
+      document.querySelector("#main-header") ||
+      document.querySelector(".main-header");
+    const footerElement =
+      document.querySelector("#main-footer") ||
+      document.querySelector(".main-footer");
+
+    if (headerElement && footerElement) {
+      headerElement.innerHTML = headerTemplate;
+      footerElement.innerHTML = footerTemplate;
+
+      // Initialize theme toggle after loading header
+      const themeBtn = document.querySelector(".theme-toggle");
+      if (themeBtn) {
+        darkMode();
+      }
+    } else {
+      console.error("Header or footer elements not found in the DOM");
     }
-    return await response.text();
   } catch (error) {
-    console.error(`Error loading template ${templateName}:`, error);
-    return `<div class="error-message">Failed to load ${templateName} template</div>`;
+    console.error("Error loading header and footer templates:", error);
   }
-}
-
-/**
- * Loads and injects the header template into the DOM
- * @returns {Promise<void>}
- */
-export async function loadHeader() {
-  const headerElement = document.getElementById("main-header");
-  if (headerElement) {
-    const headerContent = await loadTemplate("header");
-    headerElement.innerHTML = headerContent;
-  }
-}
-
-/**
- * Loads and injects the footer template into the DOM
- * @returns {Promise<void>}
- */
-export async function loadFooter() {
-  const footerElement = document.getElementById("main-footer");
-  if (footerElement) {
-    const footerContent = await loadTemplate("footer");
-    footerElement.innerHTML = footerContent;
-  }
-}
-
-/**
- * Loads all templates (header and footer)
- * @returns {Promise<void>}
- */
-export async function loadAllTemplates() {
-  await Promise.all([loadHeader(), loadFooter()]);
 }
 
 export const darkMode = () => {

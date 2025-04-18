@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Book My Corner - Movie Tickets</title>
+    <script>
+        // Apply theme immediately to prevent flash of unstyled content
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.dataset.theme = savedTheme;
+        })();
+    </script>
+</head>
+
+<body>
+    <header class="main-header" id="main-header"></header>
+    <main>
+
+        <div class="main-container">
+            <!-- Filter Toggle Button -->
+            <button id="filter-toggle" class="filter-toggle">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+
+            <!-- Filters -->
+            <div id="movie-filters" class="filter-container">
+                <div class="filter-header">
+                    <h3>Movie Filters</h3>
+                    <button id="close-filters" class="close-filters" title="Close filters">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="filter-group">
+                    <label for="title">Movie Title:</label>
+                    <input type="text" id="title" placeholder="Search by title">
+                </div>
+                <div class="filter-group">
+                    <label for="genre">Genre:</label>
+                    <select id="genre">
+                        <option value="">All Genres</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" placeholder="Release year" min="1900" max="2023">
+                </div>
+                <div class="filter-group">
+                    <button id="applyFilters">Apply Filters</button>
+                    <button id="clearFilters">Clear Filters</button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <div id="loading" class="loading">Loading...</div>
+
+            <!-- Movies container -->
+            <div class="movies-container"></div>
+        </div>
+        <!-- theme-toggle -->
+        <div class="theme-toggle">
+            <button id="theme-btn" aria-label="Toggle theme">
+                <!-- Initial icon will be set by JavaScript -->
+            </button>
+        </div>
+    </main>
+    <section class="pagination-wrapper">
+        <!-- Pagination -->
+        <div id="pagination" class="pagination"></div>
+    </section>
+
+    <footer class="main-footer" id="main-footer"></footer>
+
+    <!-- Container for seat map modal -->
+    <div id="seat-map-container"></div>
+
+    <!-- Container for movie overview modal -->
+    <div id="movie-overview-container"></div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
